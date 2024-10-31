@@ -1,0 +1,55 @@
+{
+  "name": "zhs-robot",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "publish": "electron-builder --publish=always",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "build": {
+    "appId": "com.zhskg.robot",
+    "productName": "zhs-robot",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "rangang",
+        "repo": "zhs-robot"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "sign": false,
+      "icon": "img/icon.ico"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "default",
+          "arch": ["x64", "arm64"]
+        }
+      ],
+      "identity": null,
+      "hardenedRuntime": false,
+      "icon": "img/icon.icns"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": ["x86", "x64", "arm64"]
+        }
+      ],
+      "icon": "img/icon.png"
+    }
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.0.2",
+    "electron-builder": "^25.1.8"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}

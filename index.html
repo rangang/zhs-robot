@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧式机器</title>
+    <link rel="stylesheet" href="./css/common.css">
+</head>
+<body>
+    <img id="biaoqing" style="width: 100vw; height: 100vh;" src="./img/daiji.jpeg" />
+    <script>
+      const ws = new WebSocket('ws://localhost:8080');
+
+      ws.onopen = () => {
+        console.log('Connected to server');
+      };
+
+      ws.onmessage = (event) => {
+        // const biaoqing = document.getElementById('biaoqing');
+        // biaoqing.src = `./img/${event.data}.svg`;
+      };
+
+      // document.getElementById('sendButton').onclick = () => {
+      //   const messageInput = document.getElementById('messageInput');
+      //   ws.send(messageInput.value);
+      //   messageInput.value = '';img/daiji.jpeg
+      // };
+
+      const images = ['./img/daiji.jpeg', './img/beichuozui.jpeg', 
+      './img/deyi.jpeg', './img/haipa.jpeg', './img/keai.jpeg', 
+      './img/xihuan.jpeg', './img/kujiji.jpeg', './img/lengku.jpeg',
+      './img/beimobizi.jpeg', './img/nanguo.jpeg', './img/shengqi.jpeg',
+      './img/shibieyuyin.jpeg', './img/xiumian.jpeg', './img/yuno.jpeg',
+      './img/guanji.jpeg']; // 图片数组
+      let currentImageIndex = 0;
+      setInterval(() => {
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        const biaoqing = document.getElementById('biaoqing');
+        biaoqing.src = images[currentImageIndex];
+      }, 5000); // 5000毫秒 = 5秒
+    </script>
+</body>
+</html>
