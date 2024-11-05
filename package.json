@@ -27,7 +27,10 @@
       "target": [
         {
           "target": "default",
-          "arch": ["x64", "arm64"]
+          "arch": [
+            "x64",
+            "arm64"
+          ]
         }
       ],
       "identity": null,
@@ -38,7 +41,10 @@
       "target": [
         {
           "target": "AppImage",
-          "arch": ["x64", "arm64"]
+          "arch": [
+            "x64",
+            "arm64"
+          ]
         }
       ],
       "icon": "img/icon.png"
@@ -50,6 +56,7 @@
     "electron-builder": "^25.1.8"
   },
   "dependencies": {
+    "roslib": "^1.4.1",
     "ws": "^8.18.0"
   }
 }

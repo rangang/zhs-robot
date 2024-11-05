@@ -1,43 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>智慧式机器</title>
-    <link rel="stylesheet" href="./css/common.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智慧式机器</title>
+  <link rel="stylesheet" href="./css/common.css" />
+  <script src="node_modules/roslib/build/roslib.min.js"></script>
 </head>
+
 <body>
-    <img id="biaoqing" style="width: 100vw; height: 100vh;" src="./img/daiji.jpeg" />
-    <script>
-      const ws = new WebSocket('ws://localhost:8080');
+  <img id="biaoqing" style="width: 100vw; height: 100vh" src="./img/daiji.jpeg" />
+  <script>
+    // 创建 ROS 连接实例
+    const ros = new ROSLIB.Ros({
+      url: 'ws://127.0.0.1:9090', // 连接到 ROS 2 WebSocket 服务
+    })
 
-      ws.onopen = () => {
-        console.log('Connected to server');
-      };
+    // 连接成功时的回调
+    ros.on('connection', function () {
+      document.getElementById('biaoqing').src = `./img/keai.jpeg`;
+      console.log('Connected to ROS 2')
+    })
 
-      ws.onmessage = (event) => {
-        // const biaoqing = document.getElementById('biaoqing');
-        // biaoqing.src = `./img/${event.data}.svg`;
-      };
+    // 连接关闭时的回调
+    ros.on('close', function () {
+      document.getElementById('biaoqing').src = `./img/kujiji.jpeg`;
+      console.log('Disconnected from ROS 2')
+    })
 
-      // document.getElementById('sendButton').onclick = () => {
-      //   const messageInput = document.getElementById('messageInput');
-      //   ws.send(messageInput.value);
-      //   messageInput.value = '';img/daiji.jpeg
-      // };
+    // 创建一个订阅者，订阅 ROS 2 的某个话题
+    const listener = new ROSLIB.Topic({
+      ros: ros,
+      name: '/emo', // ROS 2 话题名称
+      messageType: 'std_msgs/String', // 话题消息类型
+    })
 
-      const images = ['./img/daiji.jpeg', './img/beichuozui.jpeg', 
-      './img/deyi.jpeg', './img/haipa.jpeg', './img/keai.jpeg', 
-      './img/xihuan.jpeg', './img/kujiji.jpeg', './img/lengku.jpeg',
-      './img/beimobizi.jpeg', './img/nanguo.jpeg', './img/shengqi.jpeg',
-      './img/shibieyuyin.jpeg', './img/xiumian.jpeg', './img/yuno.jpeg',
-      './img/guanji.jpeg']; // 图片数组
-      let currentImageIndex = 0;
-      setInterval(() => {
-        currentImageIndex = (currentImageIndex + 1) % images.length;
-        const biaoqing = document.getElementById('biaoqing');
-        biaoqing.src = images[currentImageIndex];
-      }, 5000); // 5000毫秒 = 5秒
-    </script>
+    listener.subscribe(function (message) {
+      console.log('Received message: ' + message.data)
+      document.getElementById('messages').innerHTML =
+        '<p>' + message.data + '</p>'
+    })
+
+    // 创建一个发布者，向 ROS 2 发布消息
+    const publisher = new ROSLIB.Topic({
+      ros: ros,
+      name: '/emo', // ROS 2 话题名称
+      messageType: 'std_msgs/String', // 话题消息类型
+    })
+
+    // 发布消息的内容
+    const message = new ROSLIB.Message({
+      data: 'Hello from Electron!',
+    })
+
+    // // 定时发送消息
+    // setInterval(function() {
+    //     publisher.publish(message);
+    //     console.log('Published message: ' + message.data);
+    // }, 5000);
+    // const ws = new WebSocket('ws://172.168.1.127:9090');
+
+    // ws.onopen = () => {
+    //   console.log('Connected to server');
+    // };
+
+    // ws.onmessage = (event) => {
+    //   console.log('Received message:', event);
+    //   const biaoqing = document.getElementById('biaoqing');
+    //   biaoqing.src = `./img/${event.data}.jpeg`;
+    // };
+
+    // document.getElementById('sendButton').onclick = () => {
+    //   const messageInput = document.getElementById('messageInput');
+    //   ws.send(messageInput.value);
+    //   messageInput.value = '';img/daiji.jpeg
+    // };
+
+    // const images = ['./img/daiji.jpeg', './img/beichuozui.jpeg',
+    // './img/deyi.jpeg', './img/haipa.jpeg', './img/keai.jpeg',
+    // './img/xihuan.jpeg', './img/kujiji.jpeg', './img/lengku.jpeg',
+    // './img/beimobizi.jpeg', './img/nanguo.jpeg', './img/shengqi.jpeg',
+    // './img/shibieyuyin.jpeg', './img/xiumian.jpeg', './img/yuno.jpeg',
+    // './img/guanji.jpeg']; // 图片数组
+    // let currentImageIndex = 0;
+    // setInterval(() => {
+    //   currentImageIndex = (currentImageIndex + 1) % images.length;
+    //   const biaoqing = document.getElementById('biaoqing');
+    //   biaoqing.src = images[currentImageIndex];
+    // }, 5000); // 5000毫秒 = 5秒
+  </script>
 </body>
+
 </html>
