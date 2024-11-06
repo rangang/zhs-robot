@@ -9,7 +9,7 @@ const createWindow = () => {
     height: 480,
     frame: true,  // 无边框
     autoHideMenuBar: true,  // 隐藏菜单栏
-    fullscreen: false, // 全屏显示
+    fullscreen: true, // 全屏显示
     webPreferences: {
       nodeIntegration: true, // 启用 Node.js 支持
       contextIsolation: false,
