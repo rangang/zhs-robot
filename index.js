@@ -1,6 +1,6 @@
 (function () {
   // 获取机器人表情接口
-  const apiUrl = 'https://kx.shenzhuo.vip/emo/status';
+  const apiUrl = 'https://ku.shenzhuo.vip/emo/status';
   // 表情数据数组
   const dataList = []
   // 定义请求函数
