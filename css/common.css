@@ -8,3 +8,18 @@
 body {
   overflow: hidden; /* 完全隐藏 */
 }
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  background-color: #0E1F32;
+}
+
+.biaoqingImg {
+  width: 100vw; 
+  height: 100vh;
+  object-fit: cover;
+  -webkit-user-drag: none;
+}

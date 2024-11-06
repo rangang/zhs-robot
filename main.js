@@ -7,7 +7,7 @@ const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
     height: 480,
-    frame: false,  // 无边框
+    frame: true,  // 无边框
     autoHideMenuBar: true,  // 隐藏菜单栏
     fullscreen: false, // 全屏显示
     webPreferences: {
@@ -17,7 +17,7 @@ const createWindow = () => {
     }
   })
 
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 
   win.loadFile('index.html')
 }
